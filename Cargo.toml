@@ -1,9 +1,11 @@
 [package]
-name = "count-num-cli"
+name = "Individual-Proj-2-Gavin-Li"
 version = "0.0.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = { version = "4.3.17", features = ["derive"] }
+csv = "1.1"
+reqwest = { version = "^0.11", features = ["blocking"] }
+rusqlite = "0.23.1"
