@@ -13,12 +13,19 @@ pub fn extract(url: &str, file_path: &str) -> Result<(), Box<dyn Error>> {
 //write a function that creates a table in the database
 pub fn create_table(conn: &rusqlite::Connection) -> Result<(), rusqlite::Error> {
     conn.execute(
-        "CREATE TABLE IF NOT EXISTS indexs (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name_cap_2 TEXT,
-            num_rom_ca TEXT,
-            Shape_Leng REAL,
-            Shape_Area REAL
+        "CREATE TABLE IF NOT EXISTS titanic (
+            passenger_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            survived INTEGER,
+            p_class INTEGER,
+            name TEXT,
+            sex TEXT,
+            age TEXT,
+            sib_sp INTEGER,
+            parch INTEGER,
+            ticket TEXT,
+            fare REAL,
+            cabin TEXT,
+            embarked TEXT
         )",
         NO_PARAMS,
     )?;
@@ -27,14 +34,29 @@ pub fn create_table(conn: &rusqlite::Connection) -> Result<(), rusqlite::Error> 
 
 pub fn load_transform(file_path: &str) -> Result<(), Box<dyn std::error::Error>> {
     // Create a SQLite database connection
-    let conn = Connection::open("ktopomapseriesindexDB.db")?;
+    let conn = Connection::open("Titanic.db")?;
 
     // Open the CSV file and read its contents
     let file = std::fs::File::open(file_path)?;
     let mut rdr = Reader::from_reader(file);
 
     // Prepare a SQL statement for insertion
-    let mut stmt = conn.prepare("INSERT INTO indexs (name_cap_2, num_rom_ca, Shape_Leng, Shape_Area) VALUES (?, ?, ?, ?)")?;
+    let mut stmt = conn.prepare(
+        "INSERT INTO titanic (
+            passenger_id,
+            survived,
+            p_class,
+            name,
+            sex,
+            age,
+            sib_sp,
+            parch,
+            ticket,
+            fare,
+            cabin,
+            embarked
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    )?;
 
     // Iterate over the CSV records and insert them into the database
     for result in rdr.records() {

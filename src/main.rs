@@ -11,9 +11,9 @@ use rusqlite::Connection;
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let url = "https://catalogue.data.wa.gov.au/dataset/f39087e2-2885-473e-bc62-ca610cd94340/resource/96c892f3-b387-410c-80d0-e4dcec68e6f2/download/25ktopomapseriesindex.csv";
-    let file_path = "25ktopomapseriesindex.csv";
-    let db_path = "ktopomapseriesindexDB.db";
+    let url = "https://raw.githubusercontent.com/nogibjj/Individual_Proj_2_Gavin_Li/main/resources/train.csv";
+    let file_path = "train.csv";
+    let db_path = "Titanic.db";
 
     let db_exists = std::path::Path::new(db_path).exists();
 
