@@ -2,13 +2,13 @@ extern crate csv;
 
 use rusqlite::Connection;
 use std::error::Error;
-use Individual_Proj_2_Gavin_Li::create_table;
-use Individual_Proj_2_Gavin_Li::delete;
-use Individual_Proj_2_Gavin_Li::extract;
-use Individual_Proj_2_Gavin_Li::insert;
-use Individual_Proj_2_Gavin_Li::load_transform;
-use Individual_Proj_2_Gavin_Li::read;
-use Individual_Proj_2_Gavin_Li::update_shape_leng;
+use individual_proj_2_gavin_li::create_table;
+use individual_proj_2_gavin_li::delete;
+use individual_proj_2_gavin_li::extract;
+use individual_proj_2_gavin_li::insert;
+use individual_proj_2_gavin_li::load_transform;
+use individual_proj_2_gavin_li::read;
+use individual_proj_2_gavin_li::update_shape_leng;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let url = "https://raw.githubusercontent.com/nogibjj/Individual_Proj_2_Gavin_Li/main/resources/train.csv";
