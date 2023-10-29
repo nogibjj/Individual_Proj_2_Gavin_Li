@@ -25,12 +25,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         load_transform(file_path)?;
     }
 
-    let name_cap_2 = "Test Name";
-    let num_rom_ca = "Test Num";
-    let shape_leng = 1.1;
-    let shape_area = 2.2;
+    // let name_cap_2 = "Test Name";
+    // let num_rom_ca = "Test Num";
+    // let shape_leng = 1.1;
+    // let shape_area = 2.2;
 
-    insert(&conn, name_cap_2, num_rom_ca, shape_leng, shape_area)?;
+    insert(&conn, 1, 1, "Some Random Name", "male", "26", 0, 1, "PC 18000", 0.0, "C86", "c")?;
 
     match read(&conn) {
         Ok(indexs) => {
