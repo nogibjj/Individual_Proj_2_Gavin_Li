@@ -15,6 +15,6 @@ jobs:
           components: clippy, rustfmt
           override: true
       - name: Run clippy
-        run: cd count-num-cli && make lint
+        run: make lint
   
 

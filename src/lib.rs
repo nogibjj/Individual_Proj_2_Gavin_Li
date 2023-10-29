@@ -153,7 +153,7 @@ pub fn update_shape_leng(
 }
 
 //write a function that deletes a record from the database
-pub fn delete(c: &rusqlite::Connection, num_rom_ca: &str) -> Result<(), rusqlite::Error> {
-    c.execute("DELETE FROM indexs WHERE num_rom_ca = ?", &[num_rom_ca])?;
+pub fn delete(c: &rusqlite::Connection, name: &str) -> Result<(), rusqlite::Error> {
+    c.execute("DELETE FROM titanic WHERE name = ?", &[name])?;
     Ok(())
 }
