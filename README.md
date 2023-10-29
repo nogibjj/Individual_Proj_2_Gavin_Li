@@ -10,9 +10,13 @@ Gavin Li `gl183`
 
 The purpose of this project is to manipulate SQLite database and perform CRUD operations using Rust.
 
+## Video Explanation
+
+[Here is a video explaining my project]()
+
 ## Use of Github Copilot
 
-I generated my Rust code manipulating the database using
+I generated my Rust code manipulating the database using Gituhb Copilot
 
 ## Result for `make format`, `make lint`, `make test`
 

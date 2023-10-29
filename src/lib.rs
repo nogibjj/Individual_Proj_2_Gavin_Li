@@ -1,7 +1,7 @@
-use reqwest::blocking::Client;
 use csv::Reader;
+use reqwest::blocking::Client;
+use rusqlite::{params, Connection, NO_PARAMS};
 use std::error::Error;
-use rusqlite::{Connection, params, NO_PARAMS};
 
 pub fn extract(url: &str, file_path: &str) -> Result<(), Box<dyn Error>> {
     let mut response = Client::new().get(url).send()?;
@@ -55,19 +55,29 @@ pub fn load_transform(file_path: &str) -> Result<(), Box<dyn std::error::Error>>
             fare,
             cabin,
             embarked
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     )?;
 
     // Iterate over the CSV records and insert them into the database
     for result in rdr.records() {
         let record = result?;
-        let name_cap_2 = &record[0];
-        let num_rom_ca = &record[1];
-        let shape_leng: f64 = record[2].parse()?;
-        let shape_area: f64 = record[3].parse()?;
-        
+        let id: i32 = record[0].parse().unwrap();
+        let survived: i32 = record[1].parse().unwrap();
+        let pclass: i32 = record[2].parse().unwrap();
+        let name = &record[3];
+        let sex = &record[4];
+        let age = &record[5];
+        let sibsp: i32 = record[6].parse().unwrap();
+        let parch: i32 = record[7].parse().unwrap();
+        let ticket = &record[8];
+        let fare: f64 = record[9].parse()?;
+        let cabin = &record[10];
+        let embarked = &record[11];
+
         // Execute the SQL statement
-        stmt.execute(params![name_cap_2, num_rom_ca, shape_leng, shape_area])?;
+        stmt.execute(params![
+            id, survived, pclass, name, sex, age, sibsp, parch, ticket, fare, cabin, embarked
+        ])?;
     }
 
     Ok(())
@@ -76,21 +86,42 @@ pub fn load_transform(file_path: &str) -> Result<(), Box<dyn std::error::Error>>
 //write a function that inserts a record into the database
 pub fn insert(
     c: &rusqlite::Connection,
-    name_cap_2: &str,
-    num_rom_ca: &str,
-    shape_leng: f64,
-    shape_area: f64,
+    survived: i32,
+    pclass: i32,
+    name: &str,
+    sex: &str,
+    age: &str,
+    sibsp: i32,
+    parch: i32,
+    ticket: &str,
+    fare: f64,
+    cabin: &str,
+    embarked: &str,
 ) -> Result<(), rusqlite::Error> {
     c.execute(
-        "INSERT INTO indexs (name_cap_2, num_rom_ca, Shape_Leng, Shape_Area) VALUES (?, ?, ?, ?)",
-        params![name_cap_2, num_rom_ca, &shape_leng, &shape_area],
+        "INSERT INTO titanic (survived,
+            p_class,
+            name,
+            sex,
+            age,
+            sib_sp,
+            parch,
+            ticket,
+            fare,
+            cabin,
+            embarked
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        params![survived, pclass, name, sex, age, sibsp, parch, ticket, fare, cabin, embarked],
     )?;
     Ok(())
 }
 
 //write a function that reads the data from the database
-pub fn read(c: &rusqlite::Connection) -> Result<Vec<(i64, String, String, f64, f64)>, rusqlite::Error> {
-    let mut stmt = c.prepare("SELECT id, name_cap_2, num_rom_ca, Shape_Leng, Shape_Area FROM indexs")?;
+pub fn read(
+    c: &rusqlite::Connection,
+) -> Result<Vec<(i64, String, String, f64, f64)>, rusqlite::Error> {
+    let mut stmt =
+        c.prepare("SELECT id, name_cap_2, num_rom_ca, Shape_Leng, Shape_Area FROM indexs")?;
     let indexs_iter = stmt.query_map(NO_PARAMS, |row| {
         Ok((
             row.get(0)?,
