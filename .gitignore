@@ -21,3 +21,6 @@ Cargo.lock
 
 # vscode config
 .vscode/
+*.db
+## the extracted file
+train.csv

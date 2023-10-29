@@ -90,11 +90,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    let num_rom_ca_to_delete = "Test Num";
+    let test_name = "Some Random Name";
 
-    match delete(&conn, num_rom_ca_to_delete) {
+    match delete(&conn, "Some Random Name") {
         Ok(_) => {
-            println!("Deleted record with num_rom_ca: {}", num_rom_ca_to_delete);
+            println!("Deleted record with name: {}", test_name);
         }
         Err(err) => {
             eprintln!("Error deleting data: {}", err);
