@@ -162,12 +162,12 @@ pub fn read(
 //write a function that updates the shape length
 pub fn update_shape_leng(
     c: &rusqlite::Connection,
-    shape_leng: f64,
-    num_rom_ca: &str,
+    new_name: &str,
+    old_name: &str,
 ) -> Result<(), rusqlite::Error> {
     c.execute(
-        "UPDATE indexs SET Shape_Leng = ? WHERE num_rom_ca = ?",
-        params![shape_leng, num_rom_ca],
+        "UPDATE titanic SET name = ? WHERE name = ?",
+        params![new_name, old_name],
     )?;
     Ok(())
 }

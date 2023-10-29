@@ -45,14 +45,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    let new_shape_leng = 3.3;
-    let num_rom_ca_to_update = "Test Num";
+    let new_name = "new name";
+    let old_name = "Some Random Name";
 
-    match update_shape_leng(&conn, new_shape_leng, num_rom_ca_to_update) {
+    match update_shape_leng(&conn, new_name, old_name) {
         Ok(_) => {
             println!(
-                "Updated Shape Leng for num_rom_ca {} to {}",
-                num_rom_ca_to_update, new_shape_leng
+                "Updated passenger's name from {} to {}",
+                old_name, new_name
             );
         }
         Err(err) => {
@@ -61,76 +61,80 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     // Prepare a SQL statement to select a single row based on num_rom_ca
-    // let mut stmt = conn.prepare("SELECT id, name_cap_2, num_rom_ca, Shape_Leng, Shape_Area FROM indexs WHERE num_rom_ca = ?")?;
+    let mut stmt = conn.prepare("SELECT * FROM titanic WHERE name = ?")?;
 
     // Bind the parameter and execute the query
-    // let row = stmt.query_row(&[num_rom_ca_to_update], |row| {
-    //     Ok((
-    //         row.get::<usize, i32>(0)?,
-    //         row.get::<usize, String>(1)?,
-    //         row.get::<usize, String>(2)?,
-    //         row.get::<usize, f64>(3)?,
-    //         row.get::<usize, f64>(4)?,
-    //     ))
-    // });
+    let rslt = stmt.query_row(&[new_name], |row| {
+        Ok((
+            row.get::<usize, i32>(0)?,
+            row.get::<usize, i32>(1)?,
+            row.get::<usize, i32>(2)?,
+            row.get::<usize, String>(3)?,
+            row.get::<usize, String>(4)?,
+            row.get::<usize, String>(5)?,
+            row.get::<usize, i32>(6)?,
+            row.get::<usize, i32>(7)?,
+            row.get::<usize, String>(8)?,
+            row.get::<usize, f64>(9)?,
+            row.get::<usize, String>(10)?,
+            row.get::<usize, String>(11)?
+        ))
+    });
 
-    // match row {
-    //     Ok((id, name_cap_2, num_rom_ca, shape_leng, shape_area)) => {
-    //         println!(
-    //             "Updated row: ID: {}, Name: {}, Number: {}, Shape Leng: {}, Shape Area: {}",
-    //             id, name_cap_2, num_rom_ca, shape_leng, shape_area
-    //         );
-    //     }
-    //     Err(rusqlite::Error::QueryReturnedNoRows) => {
-    //         println!("No record found with num_rom_ca: {}", num_rom_ca_to_update);
-    //     }
-    //     Err(err) => {
-    //         eprintln!("Error reading data: {}", err);
-    //     }
-    // }
+    match rslt {
+        Ok(rslt) => {
+            println!(
+                "passenger_id: {}, survived: {}, p_class: {}, name: {}, sex: {}, age: {}, sib_sp: {}, parch: {}, ticket: {}, fare:{}, cabin: {}, embarked: {}",
+                rslt.0, rslt.1, rslt.2, rslt.3, rslt.4, rslt.5, rslt.6, rslt.7, rslt.8, rslt.9,rslt.10,rslt.11
+            );
+        }
+        Err(err) => {
+            eprintln!("Error reading data: {}", err);
+        }
+    }
 
-    let test_name = "Some Random Name";
+    // let test_name = "Some Random Name";
 
-    match delete(&conn, "Some Random Name") {
+    match delete(&conn, new_name) {
         Ok(_) => {
-            println!("Deleted record with name: {}", test_name);
+            println!("Deleted record with name: {}", new_name);
         }
         Err(err) => {
             eprintln!("Error deleting data: {}", err);
         }
     }
 
-    // Prepare a SQL statement to select a single row based on num_rom_ca
-    // let mut stmt = conn.prepare("SELECT id, name_cap_2, num_rom_ca, Shape_Leng, Shape_Area FROM indexs WHERE num_rom_ca = ?")?;
+    let mut stmt = conn.prepare("SELECT * FROM titanic WHERE name = ?")?;
 
-    // // Bind the parameter and execute the query
-    // let row = stmt.query_row(&[num_rom_ca_to_update], |row| {
-    //     Ok((
-    //         row.get::<usize, i32>(0)?,
-    //         row.get::<usize, String>(1)?,
-    //         row.get::<usize, String>(2)?,
-    //         row.get::<usize, f64>(3)?,
-    //         row.get::<usize, f64>(4)?,
-    //     ))
-    // });
+    // Bind the parameter and execute the query
+    let rslt = stmt.query_row(&[new_name], |row| {
+        Ok((
+            row.get::<usize, i32>(0)?,
+            row.get::<usize, i32>(1)?,
+            row.get::<usize, i32>(2)?,
+            row.get::<usize, String>(3)?,
+            row.get::<usize, String>(4)?,
+            row.get::<usize, String>(5)?,
+            row.get::<usize, i32>(6)?,
+            row.get::<usize, i32>(7)?,
+            row.get::<usize, String>(8)?,
+            row.get::<usize, f64>(9)?,
+            row.get::<usize, String>(10)?,
+            row.get::<usize, String>(11)?
+        ))
+    });
 
-    // match row {
-    //     Ok((id, name_cap_2, num_rom_ca, shape_leng, shape_area)) => {
-    //         println!(
-    //             "Updated row: ID: {}, Name: {}, Number: {}, Shape Leng: {}, Shape Area: {}",
-    //             id, name_cap_2, num_rom_ca, shape_leng, shape_area
-    //         );
-    //     }
-    //     Err(rusqlite::Error::QueryReturnedNoRows) => {
-    //         println!(
-    //             "Delete Successfully! No record found with num_rom_ca: {}",
-    //             num_rom_ca_to_update
-    //         );
-    //     }
-    //     Err(err) => {
-    //         eprintln!("Error reading data: {}", err);
-    //     }
-    // }
+    match rslt {
+        Ok(rslt) => {
+            println!(
+                "passenger_id: {}, survived: {}, p_class: {}, name: {}, sex: {}, age: {}, sib_sp: {}, parch: {}, ticket: {}, fare:{}, cabin: {}, embarked: {}",
+                rslt.0, rslt.1, rslt.2, rslt.3, rslt.4, rslt.5, rslt.6, rslt.7, rslt.8, rslt.9,rslt.10,rslt.11
+            );
+        }
+        Err(err) => {
+            eprintln!("Error reading data: {}", err);
+        }
+    }
 
     Ok(())
 }
