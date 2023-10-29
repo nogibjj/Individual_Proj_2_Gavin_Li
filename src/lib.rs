@@ -120,9 +120,25 @@ pub fn insert(
 //write a function that reads the data from the database
 pub fn read(
     c: &rusqlite::Connection,
-) -> Result<(i32, i32, i32, String, String, String, i32, i32, String, f64, String, String), rusqlite::Error> {
-    let mut stmt =
-        c.prepare("SELECT
+) -> Result<
+    (
+        i32,
+        i32,
+        i32,
+        String,
+        String,
+        String,
+        i32,
+        i32,
+        String,
+        f64,
+        String,
+        String,
+    ),
+    rusqlite::Error,
+> {
+    let mut stmt = c.prepare(
+        "SELECT
         passenger_id,
         survived,
         p_class,
@@ -134,7 +150,8 @@ pub fn read(
         ticket,
         fare,
         cabin,
-        embarked FROM titanic WHERE passenger_id = ?;")?;
+        embarked FROM titanic WHERE passenger_id = ?;",
+    )?;
     let rslt = stmt.query_row([1], |row| {
         Ok((
             row.get(0)?,

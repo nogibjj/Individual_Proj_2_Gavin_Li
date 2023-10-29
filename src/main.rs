@@ -1,7 +1,5 @@
 extern crate csv;
 
-use rusqlite::Connection;
-use std::error::Error;
 use individual_proj_2_gavin_li::create_table;
 use individual_proj_2_gavin_li::delete;
 use individual_proj_2_gavin_li::extract;
@@ -9,6 +7,8 @@ use individual_proj_2_gavin_li::insert;
 use individual_proj_2_gavin_li::load_transform;
 use individual_proj_2_gavin_li::read;
 use individual_proj_2_gavin_li::update_shape_leng;
+use rusqlite::Connection;
+use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let url = "https://raw.githubusercontent.com/nogibjj/Individual_Proj_2_Gavin_Li/main/resources/train.csv";
@@ -30,7 +30,20 @@ fn main() -> Result<(), Box<dyn Error>> {
     // let shape_leng = 1.1;
     // let shape_area = 2.2;
 
-    insert(&conn, 1, 1, "Some Random Name", "male", "26", 0, 1, "PC 18000", 0.0, "C86", "c")?;
+    insert(
+        &conn,
+        1,
+        1,
+        "Some Random Name",
+        "male",
+        "26",
+        0,
+        1,
+        "PC 18000",
+        0.0,
+        "C86",
+        "c",
+    )?;
     println!("Insertion Succeeded");
 
     match read(&conn) {
@@ -50,10 +63,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     match update_shape_leng(&conn, new_name, old_name) {
         Ok(_) => {
-            println!(
-                "Updated passenger's name from {} to {}",
-                old_name, new_name
-            );
+            println!("Updated passenger's name from {} to {}", old_name, new_name);
         }
         Err(err) => {
             eprintln!("Error updating data: {}", err);
@@ -77,7 +87,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             row.get::<usize, String>(8)?,
             row.get::<usize, f64>(9)?,
             row.get::<usize, String>(10)?,
-            row.get::<usize, String>(11)?
+            row.get::<usize, String>(11)?,
         ))
     });
 
@@ -120,7 +130,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             row.get::<usize, String>(8)?,
             row.get::<usize, f64>(9)?,
             row.get::<usize, String>(10)?,
-            row.get::<usize, String>(11)?
+            row.get::<usize, String>(11)?,
         ))
     });
 
