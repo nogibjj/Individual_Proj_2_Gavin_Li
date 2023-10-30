@@ -37,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: optimized-binary
-        path: target/release/Individual_Proj_2_Gavin_Li
+        path: target/release/individual-proj-2-gavin-li
