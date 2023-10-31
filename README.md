@@ -12,7 +12,7 @@ The purpose of this project is to manipulate SQLite database and perform CRUD op
 
 ## Video Explanation
 
-[Here is a video explaining my project]()
+[Here is a video explaining my project](https://youtu.be/amfXO4-dEgw)
 
 ## Use of Github Copilot
 
