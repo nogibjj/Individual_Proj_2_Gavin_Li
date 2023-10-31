@@ -177,7 +177,7 @@ pub fn read(
 }
 
 //write a function that updates the shape length
-pub fn update_shape_leng(
+pub fn update_(
     c: &rusqlite::Connection,
     new_name: &str,
     old_name: &str,

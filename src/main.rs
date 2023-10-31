@@ -6,7 +6,7 @@ use individual_proj_2_gavin_li::extract;
 use individual_proj_2_gavin_li::insert;
 use individual_proj_2_gavin_li::load_transform;
 use individual_proj_2_gavin_li::read;
-use individual_proj_2_gavin_li::update_shape_leng;
+use individual_proj_2_gavin_li::update_;
 use rusqlite::Connection;
 use std::error::Error;
 
@@ -61,7 +61,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let new_name = "new name";
     let old_name = "Some Random Name";
 
-    match update_shape_leng(&conn, new_name, old_name) {
+    match update_(&conn, new_name, old_name) {
         Ok(_) => {
             println!("Updated passenger's name from {} to {}", old_name, new_name);
         }
